@@ -1,0 +1,8 @@
+file_format: "1"
+id: testkb
+name: Testkb 
+type: shield
+url: https://github.com/nikservik/likeeb
+requires: [seeeduino_xiao_ble]
+features:
+  - keys
