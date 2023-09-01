@@ -1,7 +1,5 @@
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/outputs.h>
 
 / {
     chosen {
@@ -13,4 +11,16 @@
         label = "VBATT";
     };
 
+    keymap {
+        compatible = "zmk,keymap";
+
+        layer_0 {
+            bindings = <
+ &kp Q  &trans        &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans
+&trans  &trans        &trans        &trans        &trans    &trans  &trans  &trans  &trans  &trans
+                &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3    &trans  &trans  &trans
+            >;
+        };
+    };
 };
