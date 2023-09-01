@@ -1,0 +1,19 @@
+
+/*
+ * Copyright (c) 2022 Lau Kar Rui
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include "likeeb.dtsi"
+
+
+&kscan0 {
+    col-gpios
+        = <&seeed_xiao 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&seeed_xiao 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&seeed_xiao 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&seeed_xiao 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&seeed_xiao 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        ;
+};

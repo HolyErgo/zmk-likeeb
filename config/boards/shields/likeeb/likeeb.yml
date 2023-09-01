@@ -1,0 +1,11 @@
+file_format: "1"
+id: likeeb
+name: Like Keeb 
+type: shield
+url: https://github.com/nikservik/likeeb
+requires: [seeed_xiao]
+features:
+  - keys
+siblings:
+  - likeeb_left
+  - likeeb_right
