@@ -3,7 +3,7 @@ id: likeeb
 name: Like Keeb 
 type: shield
 url: https://github.com/nikservik/likeeb
-requires: [seeed_xiao]
+requires: [seeeduino_xiao_ble]
 features:
   - keys
 siblings:

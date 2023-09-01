@@ -10,10 +10,10 @@
 
 &kscan0 {
     col-gpios
-        = <&seeed_xiao 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&seeed_xiao 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&seeed_xiao 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&seeed_xiao 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-        , <&seeed_xiao 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        = <&xiao_d 1 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 2 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 3 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 4 GPIO_ACTIVE_HIGH>
+        , <&xiao_d 5 GPIO_ACTIVE_HIGH>
         ;
 };
