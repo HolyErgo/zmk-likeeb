@@ -1,4 +1,4 @@
-if SHIELD_LIKEEB_LEFT
+if SHIELD_LIKEEB_RIGHT
 
 config ZMK_KEYBOARD_NAME
     default "likeeb"
