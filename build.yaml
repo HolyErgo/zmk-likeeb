@@ -15,3 +15,5 @@
 include:
   - board: seeeduino_xiao_ble
     shield: likeeb_right
+  - board: seeeduino_xiao_ble
+    shield: likeeb_left
