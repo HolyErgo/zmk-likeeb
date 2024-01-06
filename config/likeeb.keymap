@@ -107,7 +107,7 @@
             bindings = <
 &trans     &trans    &trans    &trans     &trans    &kp PG_UP  &kp HOME     &kp UP     &kp END    &kp LG(LS(Z))
 &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &kp PG_DN  &kp LEFT     &kp DOWN   &kp RIGHT  &kp LG(Z)
-&trans     &trans    &trans    &trans     &trans    &trans     &kp K_PASTE  &kp LG(C)  &kp LG(X)  &kp CAPS
+&trans     &trans    &trans    &trans     &trans    &trans     &kp K_PASTE  &kp LG(C)  &kp LG(X)  &kp CAPSLOCK
                      &trans    &trans     &trans    &trans     &trans       &trans
             >;
         };
