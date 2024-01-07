@@ -69,10 +69,10 @@
 
         Base {
             bindings = <
-&kp Q        &kp W       &kp E       &kp R         &kp T        &kp Y         &kp U         &kp I            &kp O       &kp P
-&mt LCTRL A  &mt LALT S  &mt LGUI D  &mt LSHIFT F  &kp G        &kp H         &mt RSHIFT J  &mt RGUI K       &mt RALT L  &mt RCTRL SEMICOLON
-&kp Z        &kp X       &kp C       &kp V         &kp B        &kp N         &kp M         &kp COMMA        &kp DOT     &kp FSLH
-                         &lt 1 ESC   &lt 4 SPACE   &lt 5 TAB    &lt 2 RETURN  &kp RSHIFT    &lt 3 BACKSPACE
+&kp Q        &kp W       &kp E        &kp R         &kp T        &kp Y         &kp U         &kp I            &kp O       &kp P
+&mt LCTRL A  &mt LALT S  &mt LGUI D   &mt LSHIFT F  &kp G        &kp H         &mt RSHIFT J  &mt RGUI K       &mt RALT L  &mt RCTRL SEMICOLON
+&kp Z        &kp X       &kp C        &kp V         &kp B        &kp N         &kp M         &kp COMMA        &kp DOT     &kp FSLH
+                         &lt 4 SPACE  &lt 5 TAB     &lt 1 ESC    &lt 2 RETURN  &kp RSHIFT    &lt 3 BACKSPACE
             >;
         };
 
@@ -105,10 +105,10 @@
 
         Nav {
             bindings = <
-&trans     &trans    &trans    &trans     &trans    &kp PG_UP  &kp HOME     &kp UP     &kp END    &kp LG(LS(Z))
-&kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &kp PG_DN  &kp LEFT     &kp DOWN   &kp RIGHT  &kp LG(Z)
-&trans     &trans    &trans    &trans     &trans    &trans     &kp LG(B)    &kp LG(C)  &kp LG(X)  &kp CAPSLOCK
-                     &trans    &trans     &trans    &trans     &trans       &trans
+&trans     &trans    &trans    &trans     &trans    &kp PG_UP  &kp HOME   &kp UP     &kp END    &kp LG(LS(Z))
+&kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &kp PG_DN  &kp LEFT   &kp DOWN   &kp RIGHT  &kp LG(Z)
+&trans     &trans    &trans    &trans     &trans    &trans     &kp LG(B)  &kp LG(C)  &kp LG(X)  &kp CAPSLOCK
+                     &trans    &trans     &trans    &trans     &trans     &trans
             >;
         };
 
