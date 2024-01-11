@@ -1,6 +1,0 @@
-if SHIELD_TESTKB
-
-config ZMK_KEYBOARD_NAME
-    default "testkb"
-
-endif
