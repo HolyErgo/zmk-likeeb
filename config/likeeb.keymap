@@ -107,7 +107,7 @@
 
         Media {
             bindings = <
-&trans     &trans    &trans    &trans     &trans    &kp C_VOL_UP  &trans        &trans        &trans        &bootloader
+&trans     &trans    &trans    &trans     &trans    &kp C_VOL_UP  &trans        &trans        &trans        &bt BT_CLR
 &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &kp C_VOL_DN  &kp C_PREV    &kp C_PP      &kp C_NEXT    &trans
 &trans     &trans    &trans    &trans     &trans    &kp C_MUTE    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
                      &trans    &trans     &trans    &trans        &trans        &trans
@@ -116,10 +116,10 @@
 
         Sym {
             bindings = <
-&kp GRAVE  &kp AT     &kp LPAR    &kp RPAR  &kp EXCL         &m_darrow  &trans     &trans    &trans    &trans
-&kp HASH   &kp QMARK  &kp LBKT    &kp RBKT  &kp AMPERSAND    &m_this    &kp RSHFT  &kp RGUI  &kp RALT  &kp RCTRL
-&kp FSLH   &kp BSLH   &kp LT      &kp GT    &kp PIPE         &m_arrow   &trans     &trans    &trans    &trans
-                      &kp DOLLAR  &trans    &trans           &trans     &trans     &trans
+&kp GRAVE  &kp AT     &kp LPAR   &kp RPAR    &kp EXCL         &m_darrow  &trans     &trans    &trans    &trans
+&kp HASH   &kp QMARK  &kp LBKT   &kp RBKT    &kp AMPERSAND    &m_this    &kp RSHFT  &kp RGUI  &kp RALT  &kp RCTRL
+&kp FSLH   &kp BSLH   &kp LT     &kp GT      &kp PIPE         &m_arrow   &trans     &trans    &trans    &trans
+                      &kp SPACE  &kp DOLLAR  &trans           &trans     &trans     &trans
             >;
         };
 
