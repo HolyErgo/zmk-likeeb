@@ -28,7 +28,7 @@ draw_config:
     rx: 4
     ry: 4
   svg_style: |
-    /* inherit to force styles through use tags */
+    /* inherit to force styles through use tags  */
     svg path {
         fill: inherit;
     }
