@@ -223,7 +223,7 @@ layers:
   - {type: trans}
 combos:
 - p: [20, 10]
-  k: $$tabler:world$$
+  k: $$tabler:outline/world$$
 - p: [0, 10]
   k: \
 - p: [9, 19]
