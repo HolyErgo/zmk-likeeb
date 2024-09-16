@@ -5,6 +5,7 @@ on:
     paths:
       - "config/*.keymap"
       - "keymap/config.yaml"
+      - "keymap/*.json"
 
 jobs:
   draw:
