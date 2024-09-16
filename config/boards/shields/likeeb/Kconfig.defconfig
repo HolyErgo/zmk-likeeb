@@ -1,7 +1,7 @@
 if SHIELD_LIKEEB_RIGHT
 
 config ZMK_KEYBOARD_NAME
-    default "likeeb"
+    default "likeeb 2.0"
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
