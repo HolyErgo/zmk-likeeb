@@ -316,7 +316,7 @@ parse_config:
 
     LG(LS(N4)): $$mdi:monitor-screenshot$$
 
-    LC(SPACE): $$tabler:world$$
+    LC(SPACE): $$tabler:outline/world$$
 
     # Arrows
     UP: $$mdi:arrow-up-bold$$
