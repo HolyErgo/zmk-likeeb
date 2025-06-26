@@ -148,6 +148,6 @@
 
         extra1 {
             status = "reserved";
-        }
+        };
     };
 };
