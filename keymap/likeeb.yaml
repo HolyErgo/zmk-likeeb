@@ -191,7 +191,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {type: trans}
+  - '&studio_unlock'
   - F7
   - F8
   - F9
