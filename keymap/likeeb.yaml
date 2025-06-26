@@ -1,3 +1,4 @@
+layout: {zmk_keyboard: likeeb}
 layers:
   Base:
   - Q
@@ -30,12 +31,12 @@ layers:
   - ','
   - .
   - /
-  - {t: '$$mdi:keyboard-space$$', h: Nav}
-  - {t: '$$mdi:keyboard-tab$$', h: Fun}
+  - {t: '$$mdi:keyboard-space$$', h: Navigation}
+  - {t: '$$mdi:keyboard-tab$$', h: Function keys}
   - {t: '$$mdi:keyboard-esc$$', h: Media}
-  - {t: '$$mdi:keyboard-return$$', h: Sym}
+  - {t: '$$mdi:keyboard-return$$', h: Symbols}
   - $$mdi:apple-keyboard-shift$$
-  - {t: '$$mdi:backspace$$', h: Num}
+  - {t: '$$mdi:backspace$$', h: Numbers}
   Media:
   - {type: trans}
   - {type: trans}
@@ -73,7 +74,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  Sym:
+  Symbols:
   - '`'
   - '@'
   - (
@@ -110,7 +111,7 @@ layers:
   - {type: held}
   - {type: trans}
   - {type: trans}
-  Num:
+  Numbers:
   - ^
   - '7'
   - '8'
@@ -147,7 +148,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: held}
-  Nav:
+  Navigation:
   - {type: trans}
   - {type: trans}
   - {type: trans}
@@ -172,8 +173,8 @@ layers:
   - $$mdi:content-cut$$
   - $$mdi:content-copy$$
   - $$mdi:content-paste$$
-  - Gui+ V
-  - Gui+ V
+  - Gui+V
+  - Gui+V
   - $$mdi:content-paste$$
   - $$mdi:content-copy$$
   - $$mdi:content-cut$$
@@ -184,7 +185,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  Fun:
+  Function keys:
   - {type: trans}
   - {type: trans}
   - {type: trans}
