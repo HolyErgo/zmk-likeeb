@@ -139,15 +139,13 @@
         Fun {
             display-name = "Function keys";
             bindings = <
-&trans     &trans    &trans    &trans     &trans    &trans          &kp F7  &kp F8  &kp F9  &kp F12
+&trans     &trans    &trans    &trans     &trans    &studio_unlock  &kp F7  &kp F8  &kp F9  &kp F12
 &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &trans          &kp F4  &kp F5  &kp F6  &kp F11
 &trans     &trans    &trans    &trans     &trans    &kp LS(LG(N4))  &kp F1  &kp F2  &kp F3  &kp F10
                      &trans    &trans     &trans    &trans          &trans  &trans
             >;
         };
 
-        extra1 {
-            status = "reserved";
-        };
+        extra1 { status = "reserved"; };
     };
 };
