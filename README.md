@@ -1,5 +1,8 @@
-# ZMK config for [LIKEeb](https://github.com/HolyErgo/likeeb)
+# ZMK config for [Likeeb](https://github.com/HolyErgo/likeeb)
 
-To customize layout make fork of this repository and then edit it with [Keymap Editor](https://nickcoutsos.github.io/keymap-editor/).
+Supports [ZMK Studio](https://zmk.dev/docs/features/studio#building). `&studio_unlock` is on 'Function keys' layer.
+
+You can fork of this repository and customize layout with [Keymap Editor](https://nickcoutsos.github.io/keymap-editor/).
+
 
 ![](./keymap/likeeb.svg)
