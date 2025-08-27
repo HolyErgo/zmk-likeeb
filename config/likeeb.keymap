@@ -58,8 +58,8 @@
     behaviors {
         lht: left-hold-tap {
             compatible = "zmk,behavior-hold-tap";
-            label = "LHT";
             bindings = <&kp>, <&kp>;
+            #binding-cells = <2>;
 
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -72,8 +72,8 @@
 
         rht: right-hold-tap {
             compatible = "zmk,behavior-hold-tap";
-            label = "RHT";
             bindings = <&kp>, <&kp>;
+            #binding-cells = <2>;
 
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -86,8 +86,8 @@
 
         lht_shift: left-hold-tap-shift {
             compatible = "zmk,behavior-hold-tap";
-            label = "LHT_S";
             bindings = <&kp>, <&kp>;
+            #binding-cells = <2>;
 
             flavor = "balanced";
             tapping-term-ms = <280>;
@@ -100,8 +100,8 @@
 
         rht_shift: right-hold-tap-shift {
             compatible = "zmk,behavior-hold-tap";
-            label = "RHT_S";
             bindings = <&kp>, <&kp>;
+            #binding-cells = <2>;
 
             flavor = "balanced";
             tapping-term-ms = <280>;
