@@ -61,12 +61,13 @@
             label = "LHT";
             bindings = <&kp>, <&kp>;
 
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
-            require-prior-idle-ms = <100>;
             flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+
             hold-trigger-key-positions = <29 19 9 28 18 8 27 17 7 26 16 6 5 15 25>;
+            hold-trigger-on-release;
         };
 
         rht: right-hold-tap {
@@ -74,12 +75,41 @@
             label = "RHT";
             bindings = <&kp>, <&kp>;
 
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
-            require-prior-idle-ms = <100>;
             flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+
             hold-trigger-key-positions = <0 10 20 21 11 1 22 12 2 3 13 23 24 14 4>;
+            hold-trigger-on-release;
+        };
+
+        lht_shift: left-hold-tap-shift {
+            compatible = "zmk,behavior-hold-tap";
+            label = "LHT_S";
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <0>;     
+            hold-trigger-key-positions = <29 19 9 28 18 8 27 17 7 26 16 6 5 15 25>;
+            hold-trigger-on-release;
+            // hold-while-undecided;
+        };
+
+        rht_shift: right-hold-tap-shift {
+            compatible = "zmk,behavior-hold-tap";
+            label = "RHT_S";
+            bindings = <&kp>, <&kp>;
+
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <0>;
+            hold-trigger-key-positions = <0 10 20 21 11 1 22 12 2 3 13 23 24 14 4>;
+            hold-trigger-on-release;
+            // hold-while-undecided;
         };
     };
 
@@ -90,7 +120,7 @@
             display-name = "Base";
             bindings = <
 &kp Q         &kp W        &kp E        &kp R         &kp T        &kp Y         &kp U         &kp I            &kp O        &kp P
-&lht LCTRL A  &lht LALT S  &lht LGUI D  &lht LSHFT F  &kp G        &kp H         &rht RSHFT J  &rht RGUI K      &rht RALT L  &rht RCTRL SEMI
+&lht LCTRL A  &lht LALT S  &lht LGUI D  &lht_shift LSHFT F  &kp G        &kp H         &rht_shift RSHFT J  &rht RGUI K      &rht RALT L  &rht RCTRL SEMI
 &kp Z         &kp X        &kp C        &kp V         &kp B        &kp N         &kp M         &kp COMMA        &kp DOT      &kp FSLH
                            &lt 4 SPACE  &lt 5 TAB     &lt 1 ESC    &lt 2 RETURN  &kp RSHIFT    &lt 3 BACKSPACE
             >;
