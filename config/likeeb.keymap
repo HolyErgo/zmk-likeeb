@@ -87,8 +87,8 @@
             bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
-            flavor = "balanced";
-            tapping-term-ms = <280>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <340>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <0>;
             hold-trigger-key-positions = <29 19 9 28 18 8 27 17 7 26 16 6 5 15 25 35 34 33 31 30 32>;
@@ -102,8 +102,8 @@
             bindings = <&kp>, <&kp>;
 
             #binding-cells = <2>;
-            flavor = "balanced";
-            tapping-term-ms = <280>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <340>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <0>;
             hold-trigger-key-positions = <0 10 20 21 11 1 22 12 2 3 13 23 24 14 4 30 31 32>;
