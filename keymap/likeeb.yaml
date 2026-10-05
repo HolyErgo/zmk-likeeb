@@ -3,31 +3,31 @@ layers:
   Base:
   - Q
   - W
-  - E
-  - R
-  - T
-  - Y
-  - U
-  - I
-  - O
+  - F
   - P
+  - B
+  - J
+  - L
+  - U
+  - Y
+  - ;
   - {t: A, h: '$$mdi:apple-keyboard-control$$'}
-  - {t: S, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: D, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: F, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: R, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-command$$'}
+  - {t: T, h: '$$mdi:apple-keyboard-shift$$'}
   - G
-  - H
-  - {t: J, h: '$$mdi:apple-keyboard-shift$$'}
-  - {t: K, h: '$$mdi:apple-keyboard-command$$'}
-  - {t: L, h: '$$mdi:apple-keyboard-option$$'}
-  - {t: ;, h: '$$mdi:apple-keyboard-control$$'}
+  - M
+  - {t: N, h: '$$mdi:apple-keyboard-shift$$'}
+  - {t: E, h: '$$mdi:apple-keyboard-command$$'}
+  - {t: I, h: '$$mdi:apple-keyboard-option$$'}
+  - {t: O, h: '$$mdi:apple-keyboard-control$$'}
   - Z
   - X
   - C
+  - D
   - V
-  - B
-  - N
-  - M
+  - K
+  - H
   - ','
   - .
   - /
@@ -37,12 +37,49 @@ layers:
   - {t: '$$mdi:keyboard-return$$', h: Symbols}
   - $$mdi:apple-keyboard-shift$$
   - {t: '$$mdi:backspace$$', h: Numbers}
+  RU:
+  - Q
+  - W
+  - {t: E, s: F}
+  - {t: R, s: P}
+  - {t: T, s: B}
+  - {t: Y, s: J}
+  - {t: U, s: L}
+  - {t: I, s: U}
+  - {t: O, s: Y}
+  - {t: P, s: ;}
+  - {t: A, h: '$$mdi:apple-keyboard-control$$'}
+  - {t: S, h: '$$mdi:apple-keyboard-option$$', s: R}
+  - {t: D, h: '$$mdi:apple-keyboard-command$$', s: S}
+  - {t: F, h: '$$mdi:apple-keyboard-shift$$', s: T}
+  - G
+  - {t: H, s: M}
+  - {t: J, h: '$$mdi:apple-keyboard-shift$$', s: N}
+  - {t: K, h: '$$mdi:apple-keyboard-command$$', s: E}
+  - {t: L, h: '$$mdi:apple-keyboard-option$$', s: I}
+  - {t: KP 4, h: '$$mdi:apple-keyboard-control$$', s: O}
+  - Z
+  - X
+  - C
+  - {t: V, s: D}
+  - {t: B, s: V}
+  - {t: N, s: K}
+  - {t: M, s: H}
+  - {t: KP 6, s: ','}
+  - {t: KP 7, s: .}
+  - {t: ., s: /}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
   Media:
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {type: trans}
-  - {type: trans}
+  - {t: Base, h: toggle}
+  - {t: RU, h: toggle}
   - $$mdi:volume-high$$
   - {type: trans}
   - {type: trans}
@@ -172,10 +209,10 @@ layers:
   - $$mdi:undo$$
   - $$mdi:content-cut$$
   - $$mdi:content-copy$$
-  - $$mdi:content-paste$$
   - Gui+V
+  - {type: trans}
+  - {type: trans}
   - Gui+V
-  - $$mdi:content-paste$$
   - $$mdi:content-copy$$
   - $$mdi:content-cut$$
   - $$mdi:apple-keyboard-caps$$
@@ -224,12 +261,28 @@ layers:
   - {type: trans}
 combos:
 - p: [20, 10]
-  k: $$tabler:outline/world$$
+  k: '&lang_tog'
 - p: [0, 10]
   k: \
+  l: [Base, Media, Symbols, Numbers, Navigation, Function keys]
 - p: [9, 19]
   k: '['
+  l: [Base, Media, Symbols, Numbers, Navigation, Function keys]
 - p: [8, 18]
   k: ']'
+  l: [Base, Media, Symbols, Numbers, Navigation, Function keys]
 - p: [19, 29]
   k: ''''
+  l: [Base, Media, Symbols, Numbers, Navigation, Function keys]
+- p: [0, 10]
+  k: KP 1
+  l: [RU]
+- p: [8, 18]
+  k: KP 2
+  l: [RU]
+- p: [9, 19]
+  k: KP 3
+  l: [RU]
+- p: [19, 29]
+  k: KP 5
+  l: [RU]
