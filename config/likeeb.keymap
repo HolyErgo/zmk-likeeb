@@ -11,7 +11,7 @@
 #define NAV   5
 #define FUN   6
 
-// Под этими модификаторами клавиша слоя RU шлёт код Colemak.
+// Под этими модификаторами клавиша слоя RU шлёт код английской раскладки (Hyperroll).
 #define CAC (MOD_LGUI|MOD_RGUI|MOD_LALT|MOD_RALT|MOD_LCTL|MOD_RCTL)
 
 // Слои, на которых действуют латинские комбо (все, кроме RU).
@@ -120,6 +120,18 @@
 
         // ---------- home-row mods слоя RU: удержание тот же модификатор, тап mod-morph ----------
         // Вызов: &lht_s LALT 0 (второй параметр игнорируется, у морфа нет параметров).
+        lht_a: left_hold_tap_a {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_a>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <RIGHT_HAND>;
+            hold-trigger-on-release;
+        };
+
         lht_s: left_hold_tap_s {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -206,35 +218,41 @@
 
         // ---------- mod-morph слоя RU ----------
         // Без модификаторов: код позиции QWERTY (буква ЙЦУКЕН в Russian – Likeeb).
-        // С Cmd/Alt/Ctrl: код Colemak-DH той же физической клавиши. keep-mods обязателен.
-        mm_e: mm_e { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp E>, <&kp F>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_r: mm_r { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp R>, <&kp P>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_t: mm_t { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp T>, <&kp B>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_y: mm_y { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp Y>, <&kp J>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_u: mm_u { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp U>, <&kp L>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_i: mm_i { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp I>, <&kp U>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_o: mm_o { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp O>, <&kp Y>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_p: mm_p { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp P>, <&kp SEMI>; mods = <CAC>; keep-mods = <CAC>; };
+        // С Cmd/Alt/Ctrl: код Hyperroll той же физической клавиши. keep-mods обязателен.
+        mm_q: mm_q { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp Q>, <&kp F>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_w: mm_w { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp W>, <&kp Y>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_a: mm_a { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp A>, <&kp H>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_g: mm_g { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp G>, <&kp DOT>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_z: mm_z { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp Z>, <&kp K>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_x: mm_x { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp X>, <&kp J>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_c: mm_c { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp C>, <&kp Q>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_e: mm_e { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp E>, <&kp O>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_r: mm_r { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp R>, <&kp U>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_t: mm_t { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp T>, <&kp X>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_y: mm_y { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp Y>, <&kp V>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_u: mm_u { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp U>, <&kp M>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_i: mm_i { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp I>, <&kp L>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_o: mm_o { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp O>, <&kp C>; mods = <CAC>; keep-mods = <CAC>; };
 
-        mm_s: mm_s { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp S>, <&kp R>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_d: mm_d { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp D>, <&kp S>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_f: mm_f { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp F>, <&kp T>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_h: mm_h { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp H>, <&kp M>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_j: mm_j { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp J>, <&kp N>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_k: mm_k { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp K>, <&kp E>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_l: mm_l { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp L>, <&kp I>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_semi: mm_semi { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N4>, <&kp O>; mods = <CAC>; keep-mods = <CAC>; }; // ж
+        mm_s: mm_s { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp S>, <&kp I>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_d: mm_d { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp D>, <&kp E>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_f: mm_f { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp F>, <&kp A>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_h: mm_h { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp H>, <&kp D>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_j: mm_j { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp J>, <&kp T>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_k: mm_k { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp K>, <&kp R>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_l: mm_l { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp L>, <&kp S>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_semi: mm_semi { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N4>, <&kp N>; mods = <CAC>; keep-mods = <CAC>; }; // ж
 
-        mm_v: mm_v { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp V>, <&kp D>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_b: mm_b { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp B>, <&kp V>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_n: mm_n { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N>, <&kp K>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_m: mm_m { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp M>, <&kp H>; mods = <CAC>; keep-mods = <CAC>; };
-        mm_comma: mm_comma { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N6>, <&kp COMMA>; mods = <CAC>; keep-mods = <CAC>; }; // б
-        mm_dot: mm_dot { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N7>, <&kp DOT>; mods = <CAC>; keep-mods = <CAC>; }; // ю
+        mm_v: mm_v { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp V>, <&kp COMMA>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_b: mm_b { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp B>, <&kp FSLH>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_n: mm_n { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N>, <&kp Z>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_m: mm_m { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp M>, <&kp W>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_comma: mm_comma { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N6>, <&kp APOS>; mods = <CAC>; keep-mods = <CAC>; }; // б
+        mm_dot: mm_dot { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N7>, <&kp G>; mods = <CAC>; keep-mods = <CAC>; }; // ю
 
-        // Клавиша "/" в RU: точка, с Shift запятая, под Cmd/Alt/Ctrl обычный слэш.
+        // Клавиша "/" в RU: точка, с Shift запятая, под Cmd/Alt/Ctrl код Hyperroll (B).
         mm_slash_sh: mm_slash_sh { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp DOT>, <&kp COMMA>; mods = <(MOD_LSFT|MOD_RSFT)>; };
-        mm_slash: mm_slash { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&mm_slash_sh>, <&kp FSLH>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_slash: mm_slash { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&mm_slash_sh>, <&kp B>; mods = <CAC>; keep-mods = <CAC>; };
     };
 
     keymap {
@@ -243,9 +261,9 @@
         Base {
             display-name = "Base";
             bindings = <
-&kp Q         &kp W        &kp F        &kp P               &kp B        &kp J         &kp L               &kp U            &kp Y        &kp SEMI
-&lht LCTRL A  &lht LALT R  &lht LGUI S  &lht_shift LSHFT T  &kp G        &kp M         &rht_shift RSHFT N  &rht RGUI E      &rht RALT I  &rht RCTRL O
-&kp Z         &kp X        &kp C        &kp D               &kp V        &kp K         &kp H               &kp COMMA        &kp DOT      &kp FSLH
+&kp F         &kp Y        &kp O        &kp U               &kp X        &kp V         &kp M               &kp L            &kp C        &kp P
+&lht LCTRL H  &lht LALT I  &lht LGUI E  &lht_shift LSHFT A  &kp DOT      &kp D         &rht_shift RSHFT T  &rht RGUI R      &rht RALT S  &rht RCTRL N
+&kp K         &kp J        &kp Q        &kp COMMA           &kp FSLH     &kp Z         &kp W               &kp APOS         &kp G        &kp B
                            &lt NAV SPACE  &lt FUN TAB      &lt MEDIA ESC    &lt SYM RETURN  &kp RSHIFT     &lt NUM BACKSPACE
             >;
         };
@@ -253,9 +271,9 @@
         RU {
             display-name = "RU";
             bindings = <
-&kp Q         &kp W          &mm_e          &mm_r           &mm_t        &mm_y         &mm_u           &mm_i          &mm_o          &mm_p
-&lht LCTRL A  &lht_s LALT 0  &lht_d LGUI 0  &lht_f LSHFT 0  &kp G        &mm_h         &rht_j RSHFT 0  &rht_k RGUI 0  &rht_l RALT 0  &rht_semi RCTRL 0
-&kp Z         &kp X          &kp C          &mm_v           &mm_b        &mm_n         &mm_m           &mm_comma      &mm_dot        &mm_slash
+&mm_q          &mm_w          &mm_e          &mm_r           &mm_t        &mm_y         &mm_u           &mm_i          &mm_o          &kp P
+&lht_a LCTRL 0 &lht_s LALT 0  &lht_d LGUI 0  &lht_f LSHFT 0  &mm_g        &mm_h         &rht_j RSHFT 0  &rht_k RGUI 0  &rht_l RALT 0  &rht_semi RCTRL 0
+&mm_z          &mm_x          &mm_c          &mm_v           &mm_b        &mm_n         &mm_m           &mm_comma      &mm_dot        &mm_slash
                              &trans         &trans          &trans       &trans        &trans          &trans
             >;
         };
@@ -273,7 +291,7 @@
         Sym {
             display-name = "Symbols";
             bindings = <
-&kp GRAVE  &kp AT     &kp LPAR   &kp RPAR    &kp EXCL         &kp LEFT_BRACE  &kp LEFT_PARENTHESIS     &kp RIGHT_PARENTHESIS    &kp RIGHT_BRACE  &trans
+&kp GRAVE  &kp AT     &kp LPAR   &kp RPAR    &kp EXCL         &kp LEFT_BRACE  &kp LEFT_PARENTHESIS     &kp RIGHT_PARENTHESIS    &kp RIGHT_BRACE  &kp SEMI
 &kp HASH   &kp QMARK  &kp LBKT   &kp RBKT    &kp AMPERSAND    &m_this         &rht RSHFT LEFT_BRACKET  &rht RGUI RIGHT_BRACKET  &kp RALT         &kp RCTRL
 &kp FSLH   &kp BSLH   &kp LT     &kp GT      &kp PIPE         &m_arrow        &kp LT                   &kp GT                   &trans           &trans
                       &kp SPACE  &kp DOLLAR  &trans           &trans          &trans                   &trans
