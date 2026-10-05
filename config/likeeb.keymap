@@ -2,115 +2,239 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
+// Порядок важен: RU сразу над Base, моментальные слои выше RU.
+#define BASE  0
+#define RU    1
+#define MEDIA 2
+#define SYM   3
+#define NUM   4
+#define NAV   5
+#define FUN   6
+
+// Под этими модификаторами клавиша слоя RU шлёт код Colemak.
+#define CAC (MOD_LGUI|MOD_RGUI|MOD_LALT|MOD_RALT|MOD_LCTL|MOD_RCTL)
+
+// Слои, на которых действуют латинские комбо (все, кроме RU).
+#define LATIN_LAYERS BASE MEDIA SYM NUM NAV FUN
+
+// Позиции противоположной руки для hold-trigger (как раньше).
+#define RIGHT_HAND 29 19 9 28 18 8 27 17 7 26 16 6 5 15 25
+#define LEFT_HAND  0 10 20 21 11 1 22 12 2 3 13 23 24 14 4
+
 / {
     combos {
         compatible = "zmk,combos";
 
-        lang_switch {
-            bindings = <&kp LC(SPACE)>;
-            key-positions = <20 10>;
-        };
+        lang_switch { bindings = <&lang_tog>;         key-positions = <20 10>; };
 
-        kp_bslh {
-            bindings = <&kp BACKSLASH>;
-            key-positions = <0 10>;
-        };
+        kp_bslh { bindings = <&kp BACKSLASH>;         key-positions = <0 10>;  layers = <LATIN_LAYERS>; };
+        kp_lbkt { bindings = <&kp LEFT_BRACKET>;      key-positions = <9 19>;  layers = <LATIN_LAYERS>; };
+        kp_rbkt { bindings = <&kp RIGHT_BRACKET>;     key-positions = <8 18>;  layers = <LATIN_LAYERS>; };
+        kp_apos { bindings = <&kp APOS>;              key-positions = <19 29>; layers = <LATIN_LAYERS>; };
 
-        kp_lbkt {
-            bindings = <&kp LEFT_BRACKET>;
-            key-positions = <9 19>;
-        };
-
-        kp_rbkt {
-            bindings = <&kp RIGHT_BRACKET>;
-            key-positions = <8 18>;
-        };
-
-        kp_apos {
-            bindings = <&kp APOS>;
-            key-positions = <19 29>;
-        };
+        ru_yo   { bindings = <&kp KP_N1>; key-positions = <0 10>;  layers = <RU>; }; // ё
+        ru_hard { bindings = <&kp KP_N2>; key-positions = <8 18>;  layers = <RU>; }; // ъ
+        ru_ha   { bindings = <&kp KP_N3>; key-positions = <9 19>;  layers = <RU>; }; // х
+        ru_e    { bindings = <&kp KP_N5>; key-positions = <19 29>; layers = <RU>; }; // э
     };
 
     macros {
+        // Одно нажатие: язык macOS и слой прошивки.
+        lang_tog: lang_tog {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <20>;
+            bindings = <&macro_tap &kp LC(SPACE)>, <&macro_tap &tog RU>;
+        };
+
         m_arrow: m_arrow {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp MINUS &kp GT>;
-            label = "M_ARROW";
         };
 
         m_darrow: m_darrow {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp EQUAL &kp GT>;
-            label = "M_DARROW";
         };
 
+        // Буквы теперь буквальные: T H I S, а не позиции QWERTY.
         m_this: m_this {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp DLLR &kp F &kp M &kp L &kp D &kp MINUS &kp GT>;
-            label = "M_THIS";
+            bindings = <&kp DLLR &kp T &kp H &kp I &kp S &kp MINUS &kp GT>;
         };
     };
 
     behaviors {
-        lht: left-hold-tap {
+        // ---------- home-row mods латиницы (без изменений) ----------
+        lht: left_hold_tap {
             compatible = "zmk,behavior-hold-tap";
-            bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
             flavor = "balanced";
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <125>;
-            hold-trigger-key-positions = <29 19 9 28 18 8 27 17 7 26 16 6 5 15 25>;
+            hold-trigger-key-positions = <RIGHT_HAND>;
             hold-trigger-on-release;
         };
 
-        rht: right-hold-tap {
+        rht: right_hold_tap {
             compatible = "zmk,behavior-hold-tap";
-            bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
             flavor = "balanced";
             tapping-term-ms = <280>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <125>;
-            hold-trigger-key-positions = <0 10 20 21 11 1 22 12 2 3 13 23 24 14 4>;
+            hold-trigger-key-positions = <LEFT_HAND>;
             hold-trigger-on-release;
         };
 
-        lht_shift: left-hold-tap-shift {
+        lht_shift: left_hold_tap_shift {
             compatible = "zmk,behavior-hold-tap";
-            bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
             flavor = "balanced";
             tapping-term-ms = <300>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <0>;
-            hold-trigger-key-positions = <29 19 9 28 18 8 27 17 7 26 16 6 5 15 25 35 34 33 31 30 32>;
+            hold-trigger-key-positions = <RIGHT_HAND 35 34 33 31 30 32>;
             hold-trigger-on-release;
-
-            // hold-while-undecided;
         };
 
-        rht_shift: right-hold-tap-shift {
+        rht_shift: right_hold_tap_shift {
             compatible = "zmk,behavior-hold-tap";
-            bindings = <&kp>, <&kp>;
-
             #binding-cells = <2>;
+            bindings = <&kp>, <&kp>;
             flavor = "balanced";
             tapping-term-ms = <300>;
             quick-tap-ms = <175>;
             require-prior-idle-ms = <0>;
-            hold-trigger-key-positions = <0 10 20 21 11 1 22 12 2 3 13 23 24 14 4 30 31 32>;
+            hold-trigger-key-positions = <LEFT_HAND 30 31 32>;
             hold-trigger-on-release;
-
-            // hold-while-undecided;
         };
+
+        // ---------- home-row mods слоя RU: удержание тот же модификатор, тап mod-morph ----------
+        // Вызов: &lht_s LALT 0 (второй параметр игнорируется, у морфа нет параметров).
+        lht_s: left_hold_tap_s {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_s>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <RIGHT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        lht_d: left_hold_tap_d {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_d>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <RIGHT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        lht_f: left_hold_tap_f {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_f>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <0>;
+            hold-trigger-key-positions = <RIGHT_HAND 35 34 33 31 30 32>;
+            hold-trigger-on-release;
+        };
+
+        rht_j: right_hold_tap_j {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_j>;
+            flavor = "balanced";
+            tapping-term-ms = <300>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <0>;
+            hold-trigger-key-positions = <LEFT_HAND 30 31 32>;
+            hold-trigger-on-release;
+        };
+
+        rht_k: right_hold_tap_k {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_k>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <LEFT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        rht_l: right_hold_tap_l {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_l>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <LEFT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        rht_semi: right_hold_tap_semi {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&mm_semi>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <LEFT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        // ---------- mod-morph слоя RU ----------
+        // Без модификаторов: код позиции QWERTY (буква ЙЦУКЕН в Russian – Likeeb).
+        // С Cmd/Alt/Ctrl: код Colemak-DH той же физической клавиши. keep-mods обязателен.
+        mm_e: mm_e { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp E>, <&kp F>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_r: mm_r { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp R>, <&kp P>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_t: mm_t { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp T>, <&kp B>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_y: mm_y { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp Y>, <&kp J>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_u: mm_u { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp U>, <&kp L>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_i: mm_i { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp I>, <&kp U>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_o: mm_o { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp O>, <&kp Y>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_p: mm_p { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp P>, <&kp SEMI>; mods = <CAC>; keep-mods = <CAC>; };
+
+        mm_s: mm_s { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp S>, <&kp R>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_d: mm_d { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp D>, <&kp S>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_f: mm_f { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp F>, <&kp T>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_h: mm_h { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp H>, <&kp M>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_j: mm_j { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp J>, <&kp N>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_k: mm_k { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp K>, <&kp E>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_l: mm_l { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp L>, <&kp I>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_semi: mm_semi { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N4>, <&kp O>; mods = <CAC>; keep-mods = <CAC>; }; // ж
+
+        mm_v: mm_v { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp V>, <&kp D>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_b: mm_b { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp B>, <&kp V>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_n: mm_n { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N>, <&kp K>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_m: mm_m { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp M>, <&kp H>; mods = <CAC>; keep-mods = <CAC>; };
+        mm_comma: mm_comma { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N6>, <&kp COMMA>; mods = <CAC>; keep-mods = <CAC>; }; // б
+        mm_dot: mm_dot { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp KP_N7>, <&kp DOT>; mods = <CAC>; keep-mods = <CAC>; }; // ю
+
+        // Клавиша "/" в RU: точка, с Shift запятая, под Cmd/Alt/Ctrl обычный слэш.
+        mm_slash_sh: mm_slash_sh { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp DOT>, <&kp COMMA>; mods = <(MOD_LSFT|MOD_RSFT)>; };
+        mm_slash: mm_slash { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&mm_slash_sh>, <&kp FSLH>; mods = <CAC>; keep-mods = <CAC>; };
     };
 
     keymap {
@@ -119,17 +243,27 @@
         Base {
             display-name = "Base";
             bindings = <
-&kp Q         &kp W        &kp E        &kp R               &kp T        &kp Y         &kp U               &kp I            &kp O        &kp P
-&lht LCTRL A  &lht LALT S  &lht LGUI D  &lht_shift LSHFT F  &kp G        &kp H         &rht_shift RSHFT J  &rht RGUI K      &rht RALT L  &rht RCTRL SEMI
-&kp Z         &kp X        &kp C        &kp V               &kp B        &kp N         &kp M               &kp COMMA        &kp DOT      &kp FSLH
-                           &lt 4 SPACE  &lt 5 TAB           &lt 1 ESC    &lt 2 RETURN  &kp RSHIFT          &lt 3 BACKSPACE
+&kp Q         &kp W        &kp F        &kp P               &kp B        &kp J         &kp L               &kp U            &kp Y        &kp SEMI
+&lht LCTRL A  &lht LALT R  &lht LGUI S  &lht_shift LSHFT T  &kp G        &kp M         &rht_shift RSHFT N  &rht RGUI E      &rht RALT I  &rht RCTRL O
+&kp Z         &kp X        &kp C        &kp D               &kp V        &kp K         &kp H               &kp COMMA        &kp DOT      &kp FSLH
+                           &lt NAV SPACE  &lt FUN TAB      &lt MEDIA ESC    &lt SYM RETURN  &kp RSHIFT     &lt NUM BACKSPACE
+            >;
+        };
+
+        RU {
+            display-name = "RU";
+            bindings = <
+&kp Q         &kp W          &mm_e          &mm_r           &mm_t        &mm_y         &mm_u           &mm_i          &mm_o          &mm_p
+&lht LCTRL A  &lht_s LALT 0  &lht_d LGUI 0  &lht_f LSHFT 0  &kp G        &mm_h         &rht_j RSHFT 0  &rht_k RGUI 0  &rht_l RALT 0  &rht_semi RCTRL 0
+&kp Z         &kp X          &kp C          &mm_v           &mm_b        &mm_n         &mm_m           &mm_comma      &mm_dot        &mm_slash
+                             &trans         &trans          &trans       &trans        &trans          &trans
             >;
         };
 
         Media {
             display-name = "Media";
             bindings = <
-&trans     &trans    &trans    &trans     &trans    &kp C_VOL_UP  &trans        &trans        &trans        &bt BT_CLR
+&trans     &trans    &trans    &to BASE   &to RU    &kp C_VOL_UP  &trans        &trans        &trans        &bt BT_CLR
 &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &kp C_VOL_DN  &kp C_PREV    &kp C_PP      &kp C_NEXT    &trans
 &trans     &trans    &trans    &trans     &trans    &kp C_MUTE    &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
                      &trans    &trans     &trans    &trans        &trans        &trans
@@ -158,10 +292,11 @@
 
         Nav {
             display-name = "Navigation";
+            // LG(V) теперь значит Cmd+V в любом языке и любой программе.
             bindings = <
 &trans     &trans     &trans     &trans     &trans       &kp PG_UP  &kp HOME   &kp UP     &kp END    &kp LG(LS(Z))
 &kp LCTRL  &kp LALT   &kp LGUI   &kp LSHFT  &trans       &kp PG_DN  &kp LEFT   &kp DOWN   &kp RIGHT  &kp LG(Z)
-&kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(B)  &kp LG(V)    &kp LG(V)  &kp LG(B)  &kp LG(C)  &kp LG(X)  &kp CAPSLOCK
+&kp LG(Z)  &kp LG(X)  &kp LG(C)  &kp LG(V)  &trans       &trans     &kp LG(V)  &kp LG(C)  &kp LG(X)  &kp CAPSLOCK
                       &trans     &trans     &trans       &trans     &trans     &trans
             >;
         };
@@ -175,7 +310,5 @@
                      &trans    &trans     &trans    &trans          &trans  &trans
             >;
         };
-
-        extra1 { status = "reserved"; };
     };
 };
