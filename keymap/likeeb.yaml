@@ -150,36 +150,36 @@ layers:
   - {type: trans}
   Numbers:
   - ^
-  - '7'
-  - '8'
-  - '9'
+  - {t: '7', s: '?'}
+  - {t: '8', s: '*'}
+  - {t: '9', s: (}
   - '='
   - '='
-  - '7'
-  - '8'
-  - '9'
+  - {t: '7', s: '?'}
+  - {t: '8', s: '*'}
+  - {t: '9', s: (}
   - ^
   - '*'
-  - '4'
-  - '5'
-  - '6'
+  - {t: '4', s: ;}
+  - {t: '5', s: '%'}
+  - {t: '6', s: ':'}
   - +
   - +
-  - {t: '4', h: '$$mdi:apple-keyboard-shift$$'}
-  - {t: '5', h: '$$mdi:apple-keyboard-command$$'}
-  - {t: '6', h: '$$mdi:apple-keyboard-option$$'}
+  - {t: '4', h: '$$mdi:apple-keyboard-shift$$', s: ;}
+  - {t: '5', h: '$$mdi:apple-keyboard-command$$', s: '%'}
+  - {t: '6', h: '$$mdi:apple-keyboard-option$$', s: ':'}
   - {t: '*', h: '$$mdi:apple-keyboard-control$$'}
   - /
-  - '1'
-  - '2'
-  - '3'
+  - {t: '1', s: '!'}
+  - {t: '2', s: '"'}
+  - {t: '3', s: KP 8}
   - '-'
   - '-'
-  - '1'
-  - '2'
-  - '3'
+  - {t: '1', s: '!'}
+  - {t: '2', s: '"'}
+  - {t: '3', s: KP 8}
   - /
-  - '0'
+  - {t: '0', s: )}
   - .
   - $$mdi:keyboard-space$$
   - {type: trans}
