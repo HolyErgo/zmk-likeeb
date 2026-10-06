@@ -10,6 +10,7 @@
 #define NUM   4
 #define NAV   5
 #define FUN   6
+#define NUM_RU 7   // условный: RU + NUM, только № вместо #
 
 // Под этими модификаторами клавиша слоя RU шлёт код Colemak.
 #define CAC (MOD_LGUI|MOD_RGUI|MOD_LALT|MOD_RALT|MOD_LCTL|MOD_RCTL)
@@ -25,6 +26,14 @@
 #define LEFT_HAND  0 10 20 21 11 1 22 12 2 3 13 23 24 14 4
 
 / {
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        num_ru {
+            if-layers = <RU NUM>;
+            then-layer = <NUM_RU>;
+        };
+    };
+
     combos {
         compatible = "zmk,combos";
 
@@ -208,10 +217,11 @@
         };
 
         // ---------- цифры слоя Num: тап цифра, с Shift русский ряд ! " № ; % : ? * ( ) ----------
-        // № лежит на коде Keypad 8 в раскладках Russian – Likeeb и Polish – Likeeb.
+        // В английском Shift+3 даёт #, в русском № через условный слой NUM_RU.
         ms_1: ms_1 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N1>, <&kp EXCL>;  mods = <SHIFTS>; };
         ms_2: ms_2 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N2>, <&kp DQT>;   mods = <SHIFTS>; };
-        ms_3: ms_3 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N3>, <&kp KP_N8>; mods = <SHIFTS>; }; // №
+        ms_3: ms_3 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N3>, <&kp HASH>;  mods = <SHIFTS>; };
+        ms_3ru: ms_3ru { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N3>, <&kp KP_N8>; mods = <SHIFTS>; }; // № в русском (Keypad 8 в Russian – Likeeb)
         ms_4: ms_4 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N4>, <&kp SEMI>;  mods = <SHIFTS>; };
         ms_5: ms_5 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N5>, <&kp PRCNT>; mods = <SHIFTS>; };
         ms_6: ms_6 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N6>, <&kp COLON>; mods = <SHIFTS>; };
@@ -361,6 +371,17 @@
 &kp LCTRL  &kp LALT  &kp LGUI  &kp LSHFT  &trans    &trans          &kp F4  &kp F5  &kp F6  &kp F11
 &trans     &trans    &trans    &trans     &trans    &kp LS(LG(N4))  &kp F1  &kp F2  &kp F3  &kp F10
                      &trans    &trans     &trans    &trans          &trans  &trans
+            >;
+        };
+
+        NumRU {
+            display-name = "Num RU";
+            // Включается сам, когда активны RU и Num: только № вместо #.
+            bindings = <
+&trans  &trans  &trans  &trans   &trans    &trans  &trans  &trans  &trans   &trans
+&trans  &trans  &trans  &trans   &trans    &trans  &trans  &trans  &trans   &trans
+&trans  &trans  &trans  &ms_3ru  &trans    &trans  &trans  &trans  &ms_3ru  &trans
+                &trans  &trans   &trans    &trans  &trans  &trans
             >;
         };
     };
