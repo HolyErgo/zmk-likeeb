@@ -14,6 +14,9 @@
 // Под этими модификаторами клавиша слоя RU шлёт код Colemak.
 #define CAC (MOD_LGUI|MOD_RGUI|MOD_LALT|MOD_RALT|MOD_LCTL|MOD_RCTL)
 
+// Любой Shift: цифры слоя Num дают русский ряд символов.
+#define SHIFTS (MOD_LSFT|MOD_RSFT)
+
 // Слои, на которых действуют латинские комбо (все, кроме RU).
 #define LATIN_LAYERS BASE MEDIA SYM NUM NAV FUN
 
@@ -204,6 +207,56 @@
             hold-trigger-on-release;
         };
 
+        // ---------- цифры слоя Num: тап цифра, с Shift русский ряд ! " № ; % : ? * ( ) ----------
+        // № лежит на коде Keypad 8 в раскладках Russian – Likeeb и Polish – Likeeb.
+        ms_1: ms_1 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N1>, <&kp EXCL>;  mods = <SHIFTS>; };
+        ms_2: ms_2 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N2>, <&kp DQT>;   mods = <SHIFTS>; };
+        ms_3: ms_3 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N3>, <&kp KP_N8>; mods = <SHIFTS>; }; // №
+        ms_4: ms_4 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N4>, <&kp SEMI>;  mods = <SHIFTS>; };
+        ms_5: ms_5 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N5>, <&kp PRCNT>; mods = <SHIFTS>; };
+        ms_6: ms_6 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N6>, <&kp COLON>; mods = <SHIFTS>; };
+        ms_7: ms_7 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N7>, <&kp QMARK>; mods = <SHIFTS>; };
+        ms_8: ms_8 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N8>, <&kp STAR>;  mods = <SHIFTS>; };
+        ms_9: ms_9 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N9>, <&kp LPAR>;  mods = <SHIFTS>; };
+        ms_0: ms_0 { compatible = "zmk,behavior-mod-morph"; #binding-cells = <0>; bindings = <&kp N0>, <&kp RPAR>;  mods = <SHIFTS>; };
+
+        // home-row mods правой руки на слое Num с морфом цифры на тапе
+        rht_n4: right_hold_tap_n4 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&ms_4>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <LEFT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        rht_n5: right_hold_tap_n5 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&ms_5>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <LEFT_HAND>;
+            hold-trigger-on-release;
+        };
+
+        rht_n6: right_hold_tap_n6 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&ms_6>;
+            flavor = "balanced";
+            tapping-term-ms = <280>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <125>;
+            hold-trigger-key-positions = <LEFT_HAND>;
+            hold-trigger-on-release;
+        };
+
         // ---------- mod-morph слоя RU ----------
         // Без модификаторов: код позиции QWERTY (буква ЙЦУКЕН в Russian – Likeeb).
         // С Cmd/Alt/Ctrl: код Colemak-DH той же физической клавиши. keep-mods обязателен.
@@ -283,10 +336,10 @@
         Num {
             display-name = "Numbers";
             bindings = <
-&kp CARET  &kp N7  &kp N8  &kp N9   &kp EQUAL    &kp EQUAL  &kp N7         &kp N8        &kp N9        &kp CARET
-&kp STAR   &kp N4  &kp N5  &kp N6   &kp PLUS     &kp PLUS   &rht RSHFT N4  &rht RGUI N5  &rht RALT N6  &rht RCTRL ASTERISK
-&kp SLASH  &kp N1  &kp N2  &kp N3   &kp MINUS    &kp MINUS  &kp N1         &kp N2        &kp N3        &kp SLASH
-                   &kp N0  &kp DOT  &kp SPACE    &trans     &trans         &trans
+&kp CARET  &ms_7   &ms_8   &ms_9    &kp EQUAL    &kp EQUAL  &ms_7            &ms_8           &ms_9           &kp CARET
+&kp STAR   &ms_4   &ms_5   &ms_6    &kp PLUS     &kp PLUS   &rht_n4 RSHFT 0  &rht_n5 RGUI 0  &rht_n6 RALT 0  &rht RCTRL ASTERISK
+&kp SLASH  &ms_1   &ms_2   &ms_3    &kp MINUS    &kp MINUS  &ms_1            &ms_2           &ms_3           &kp SLASH
+                   &ms_0   &kp DOT  &kp SPACE    &trans     &trans           &trans
             >;
         };
 
