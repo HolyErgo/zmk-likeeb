@@ -273,9 +273,9 @@
         Sym {
             display-name = "Symbols";
             bindings = <
-&kp GRAVE  &kp AT     &kp LPAR   &kp RPAR    &kp EXCL         &kp LEFT_BRACE  &kp LEFT_PARENTHESIS     &kp RIGHT_PARENTHESIS    &kp RIGHT_BRACE  &trans
+&kp GRAVE  &kp AT     &kp LPAR   &kp RPAR    &kp EXCL         &kp LEFT_BRACE  &kp LEFT_PARENTHESIS     &kp RIGHT_PARENTHESIS    &kp RIGHT_BRACE  &kp SEMI
 &kp HASH   &kp QMARK  &kp LBKT   &kp RBKT    &kp AMPERSAND    &m_this         &rht RSHFT LEFT_BRACKET  &rht RGUI RIGHT_BRACKET  &kp RALT         &kp RCTRL
-&kp FSLH   &kp BSLH   &kp LT     &kp GT      &kp PIPE         &m_arrow        &kp LT                   &kp GT                   &trans           &trans
+&kp FSLH   &kp BSLH   &kp LT     &kp GT      &kp PIPE         &m_arrow        &kp LT                   &kp GT                   &kp COLON        &trans
                       &kp SPACE  &kp DOLLAR  &trans           &trans          &trans                   &trans
             >;
         };
