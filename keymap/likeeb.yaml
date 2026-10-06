@@ -121,7 +121,7 @@ layers:
   - (
   - )
   - '}'
-  - {type: trans}
+  - ;
   - '#'
   - '?'
   - '['
@@ -140,7 +140,7 @@ layers:
   - ->
   - <
   - '>'
-  - {type: trans}
+  - ':'
   - {type: trans}
   - $$mdi:keyboard-space$$
   - $
