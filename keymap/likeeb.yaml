@@ -172,12 +172,12 @@ layers:
   - /
   - {t: '1', s: '!'}
   - {t: '2', s: '"'}
-  - {t: '3', s: KP 8}
+  - {t: '3', s: '#'}
   - '-'
   - '-'
   - {t: '1', s: '!'}
   - {t: '2', s: '"'}
-  - {t: '3', s: KP 8}
+  - {t: '3', s: '#'}
   - /
   - {t: '0', s: )}
   - .
@@ -259,6 +259,43 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: trans}
+  Num RU:
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {t: '3', s: KP 8}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {t: '3', s: KP 8}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: trans}
+  - {type: held}
 combos:
 - p: [20, 10]
   k: '&lang_tog'
