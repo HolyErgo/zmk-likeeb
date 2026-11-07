@@ -37,8 +37,6 @@
     combos {
         compatible = "zmk,combos";
 
-        lang_switch { bindings = <&lang_tog>;         key-positions = <20 10>; };
-
         kp_bslh { bindings = <&kp BACKSLASH>;         key-positions = <0 10>;  layers = <LATIN_LAYERS>; };
         kp_lbkt { bindings = <&kp LEFT_BRACKET>;      key-positions = <9 19>;  layers = <LATIN_LAYERS>; };
         kp_rbkt { bindings = <&kp RIGHT_BRACKET>;     key-positions = <8 18>;  layers = <LATIN_LAYERS>; };
@@ -52,12 +50,20 @@
 
     macros {
         // Одно нажатие: язык macOS и слой прошивки.
+        // Space держится 150 мс: короткий тап macOS пропускает, если переключатель языков давно не запускался.
         lang_tog: lang_tog {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            wait-ms = <0>;
-            tap-ms = <20>;
-            bindings = <&macro_tap &kp LC(SPACE)>, <&macro_tap &tog RU>;
+            bindings
+                = <&macro_wait_time 30>
+                , <&macro_press &kp LCTRL>
+                , <&macro_wait_time 150>
+                , <&macro_press &kp SPACE>
+                , <&macro_wait_time 30>
+                , <&macro_release &kp SPACE>
+                , <&macro_release &kp LCTRL>
+                , <&macro_tap &tog RU>
+                ;
         };
 
         m_arrow: m_arrow {
@@ -81,6 +87,16 @@
     };
 
     behaviors {
+        // Средняя клавиша правого большого пальца: тап — язык, удержание — диктовка Aqua Voice (Shift+Alt+D).
+        // Вызов: &dict_lang LS(LA(D)) 0.
+        dict_lang: dictation_or_language {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&lang_tog>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+        };
+
         // ---------- home-row mods латиницы (без изменений) ----------
         lht: left_hold_tap {
             compatible = "zmk,behavior-hold-tap";
@@ -309,7 +325,7 @@
 &kp Q         &kp W        &kp F        &kp P               &kp B        &kp J         &kp L               &kp U            &kp Y        &kp SEMI
 &lht LCTRL A  &lht LALT R  &lht LGUI S  &lht_shift LSHFT T  &kp G        &kp M         &rht_shift RSHFT N  &rht RGUI E      &rht RALT I  &rht RCTRL O
 &kp Z         &kp X        &kp C        &kp D               &kp V        &kp K         &kp H               &kp COMMA        &kp DOT      &kp FSLH
-                           &lt NAV SPACE  &lt FUN TAB      &lt MEDIA ESC    &lt SYM RETURN  &kp RSHIFT     &lt NUM BACKSPACE
+                           &lt NAV SPACE  &lt FUN TAB      &lt MEDIA ESC    &lt SYM RETURN  &dict_lang LS(LA(D)) 0  &lt NUM BACKSPACE
             >;
         };
 
