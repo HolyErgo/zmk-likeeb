@@ -35,7 +35,7 @@ layers:
   - {t: '$$mdi:keyboard-tab$$', h: Function keys}
   - {t: '$$mdi:keyboard-esc$$', h: Media}
   - {t: '$$mdi:keyboard-return$$', h: Symbols}
-  - $$mdi:apple-keyboard-shift$$
+  - {t: '&lang_tog', h: Sft+Alt+D}
   - {t: '$$mdi:backspace$$', h: Numbers}
   RU:
   - Q
@@ -297,8 +297,6 @@ layers:
   - {type: trans}
   - {type: held}
 combos:
-- p: [20, 10]
-  k: '&lang_tog'
 - p: [0, 10]
   k: \
   l: [Base, Media, Symbols, Numbers, Navigation, Function keys]
