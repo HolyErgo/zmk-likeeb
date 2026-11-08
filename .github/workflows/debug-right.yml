@@ -1,4 +1,5 @@
-# Отладочная правая половина: журнал через USB (без нажатых клавиш) и zmk.elf для расшифровки адреса сбоя.
+# Отладочная правая половина: подробный журнал через USB, заряд левой половины и zmk.elf для расшифровки адреса сбоя.
+# Нажатия в журнале есть — скрипт macos/likeeb-debug-log.sh вырезает их до записи в файл.
 name: Debug right half
 on:
   push:
@@ -21,7 +22,7 @@ jobs:
         run: >
           west build -s zmk/app -d build -b seeeduino_xiao_ble -S zmk-usb-logging --
           -DZMK_CONFIG="$GITHUB_WORKSPACE/config" -DSHIELD=likeeb_right
-          -DCONFIG_ZMK_LOGGING_MINIMAL=y
+          -DCONFIG_ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING=y
       - uses: actions/upload-artifact@v4
         with:
           name: debug-right
