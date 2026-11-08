@@ -35,7 +35,7 @@ layers:
   - {t: '$$mdi:keyboard-tab$$', h: Function keys}
   - {t: '$$mdi:keyboard-esc$$', h: Media}
   - {t: '$$mdi:keyboard-return$$', h: Symbols}
-  - {t: '&lang_tog', h: Sft+Alt+D}
+  - {t: '&lang_ru', h: Sft+Alt+D}
   - {t: '$$mdi:backspace$$', h: Numbers}
   RU:
   - Q
@@ -72,7 +72,7 @@ layers:
   - {type: trans}
   - {type: trans}
   - {type: trans}
-  - {type: trans}
+  - {t: '&lang_en', h: Sft+Alt+D}
   - {type: trans}
   Media:
   - {type: trans}
