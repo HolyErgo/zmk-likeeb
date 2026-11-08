@@ -37,15 +37,20 @@ func pressControlSpace() {
     up.post(tap: .cghidEventTap)
 }
 
+// USB и Bluetooth подключаются почти одновременно: второе подключение в течение 5 с пропускаем.
+var lastHandled = Date.distantPast
+
 func selectEnglish() {
+    if Date().timeIntervalSince(lastHandled) < 5 { return }
+    lastHandled = Date()
     let before = currentID()
     if before == englishID {
         print("\(Date()) likeeb подключена, уже \(englishID)")
         return
     }
     pressControlSpace()
-    // Ждём смены языка, чтобы повторное подключение (USB и Bluetooth) не нажало Ctrl+Space второй раз.
-    for _ in 0..<20 where currentID() == before { usleep(50_000) }
+    // Смена языка после пробуждения клавиатуры может занять больше секунды.
+    for _ in 0..<60 where currentID() == before { usleep(50_000) }
     print("\(Date()) likeeb подключена, Ctrl+Space: \(before) → \(currentID())")
 }
 
