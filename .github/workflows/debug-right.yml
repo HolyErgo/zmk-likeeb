@@ -1,6 +1,9 @@
 # Отладочная правая половина: журнал через USB (без нажатых клавиш) и zmk.elf для расшифровки адреса сбоя.
 name: Debug right half
-on: workflow_dispatch
+on:
+  push:
+    paths:
+      - ".github/workflows/debug-right.yml"
 
 jobs:
   build:
