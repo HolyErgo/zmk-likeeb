@@ -1,0 +1,27 @@
+# Отладочная правая половина: журнал через USB (без нажатых клавиш) и zmk.elf для расшифровки адреса сбоя.
+name: Debug right half
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    steps:
+      - uses: actions/checkout@v4
+      - name: West init and update
+        run: |
+          west init -l config
+          west update --fetch-opt=--filter=tree:0
+          west zephyr-export
+      - name: Build
+        run: >
+          west build -s zmk/app -d build -b seeeduino_xiao_ble -S zmk-usb-logging --
+          -DZMK_CONFIG="$GITHUB_WORKSPACE/config" -DSHIELD=likeeb_right
+          -DCONFIG_ZMK_LOGGING_MINIMAL=y
+      - uses: actions/upload-artifact@v4
+        with:
+          name: debug-right
+          path: |
+            build/zephyr/zmk.uf2
+            build/zephyr/zmk.elf
