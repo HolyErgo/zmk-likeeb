@@ -10,6 +10,8 @@ cp macos/org.holyergo.likeeb-english.plist ~/Library/LaunchAgents/
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.holyergo.likeeb-english.plist
 ```
 
+The agent presses Ctrl+Space, so it needs Accessibility permission (System Settings → Privacy & Security → Accessibility → likeeb-english); a rebuilt binary needs it again.
+
 Log: `~/Library/Logs/likeeb-english.log`.
 
 You can fork of this repository and customize layout with [Keymap Editor](https://nickcoutsos.github.io/keymap-editor/).
