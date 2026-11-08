@@ -6,7 +6,7 @@
     <string>org.holyergo.likeeb-english</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/sergeynikiforov/.local/bin/likeeb-english</string>
+        <string>/Users/sergeynikiforov/Applications/likeeb-english.app/Contents/MacOS/likeeb-english</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

@@ -5,12 +5,15 @@ The keymap lives only in `config/likeeb.keymap`: ZMK Studio is off, because bind
 After sleep or reboot the keyboard starts on the Base (English) layer. `macos/likeeb-english.swift` selects the English input source when the keyboard connects to the Mac. Install:
 
 ```sh
-swiftc -O -o ~/.local/bin/likeeb-english macos/likeeb-english.swift
+app=~/Applications/likeeb-english.app
+mkdir -p "$app/Contents/MacOS" && cp macos/Info.plist "$app/Contents/"
+swiftc -O -o "$app/Contents/MacOS/likeeb-english" macos/likeeb-english.swift
+codesign --force -s - --identifier org.holyergo.likeeb-english "$app"
 cp macos/org.holyergo.likeeb-english.plist ~/Library/LaunchAgents/
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/org.holyergo.likeeb-english.plist
 ```
 
-The agent presses Ctrl+Space, so it needs Accessibility permission (System Settings → Privacy & Security → Accessibility → likeeb-english); a rebuilt binary needs it again.
+The agent presses Ctrl+Space, so it needs Accessibility permission (System Settings → Privacy & Security → Accessibility → likeeb-english.app); a rebuilt app needs it again.
 
 Log: `~/Library/Logs/likeeb-english.log`.
 
