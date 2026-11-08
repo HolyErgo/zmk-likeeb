@@ -1,72 +1,52 @@
-// Включает английский источник ввода macOS, когда likeeb подключается к Маку.
-// Клавиатура подключается после сна или перезагрузки и всегда начинает со слоя Base (английский).
-// Язык переключается нажатием Ctrl+Space, а не TISSelectInputSource: после программного выбора
-// переключатель macOS пропускает следующее Ctrl+Space. Нужно разрешение «Универсальный доступ».
+// Источник ввода macOS по сигналам likeeb, без разрешений macOS.
+// F18 — английский, F19 — русский: клавиша языка шлёт их вместо Ctrl+Space.
+// При подключении клавиатуры включает английский: после сна или перезагрузки она на слое Base.
+// Ctrl+Space не используется: после выбора источника программой переключатель macOS
+// пропускает следующее Ctrl+Space. Глобальные сочетания Carbon разрешений не требуют.
+import AppKit
 import Carbon
-import CoreGraphics
-import Foundation
 import IOKit
 
 setvbuf(stdout, nil, _IOLBF, 0)
 
 let englishID = "com.apple.keylayout.PolishPro"
-let matching = IOServiceMatching("IOHIDDevice") as NSMutableDictionary
-matching["VendorID"] = 0x1D50
-matching["ProductID"] = 0x615E
+let russianID = "org.holyergo.keyboardlayout.russianlikeeb.russianlikeeb"
 
-func currentID() -> String {
-    let source = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
-    return Unmanaged<CFString>.fromOpaque(TISGetInputSourceProperty(source, kTISPropertyInputSourceID)).takeUnretainedValue() as String
-}
-
-func key(_ code: CGKeyCode, down: Bool) {
-    let event = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down)!
-    event.flags = .maskControl
-    event.post(tap: .cghidEventTap)
-}
-
-// Space держится 150 мс, как в прошивке.
-func pressControlSpace() {
-    key(CGKeyCode(kVK_Control), down: true)
-    usleep(30_000)
-    key(CGKeyCode(kVK_Space), down: true)
-    usleep(150_000)
-    key(CGKeyCode(kVK_Space), down: false)
-    usleep(30_000)
-    let up = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Control), keyDown: false)!
-    up.post(tap: .cghidEventTap)
-}
-
-// USB и Bluetooth подключаются почти одновременно: второе подключение в течение 5 с пропускаем.
-var lastHandled = Date.distantPast
-
-func selectEnglish() {
-    if Date().timeIntervalSince(lastHandled) < 5 { return }
-    lastHandled = Date()
-    let before = currentID()
-    if before == englishID {
-        print("\(Date()) likeeb подключена, уже \(englishID)")
-        return
-    }
-    pressControlSpace()
-    // Смена языка после пробуждения клавиатуры может занять больше секунды.
-    for _ in 0..<60 where currentID() == before { usleep(50_000) }
-    print("\(Date()) likeeb подключена, Ctrl+Space: \(before) → \(currentID())")
-}
-
-if !CGPreflightPostEventAccess() {
-    print("\(Date()) нет разрешения «Универсальный доступ», запрашиваю")
-    CGRequestPostEventAccess()
+func select(_ id: String, _ reason: String) {
+    let filter = [kTISPropertyInputSourceID as String: id] as CFDictionary
+    let list = TISCreateInputSourceList(filter, false).takeRetainedValue() as! [TISInputSource]
+    precondition(!list.isEmpty, "нет источника ввода \(id)")
+    let status = TISSelectInputSource(list[0])
+    print("\(Date()) \(reason): \(id) \(status == noErr ? "включён" : "ошибка \(status)")")
 }
 
 if CommandLine.arguments.contains("--select-now") {
-    selectEnglish()
+    select(englishID, "вручную")
     exit(0)
 }
 
+// Глобальные сочетания F18 и F19.
+let hotKeys: [UInt32: String] = [1: englishID, 2: russianID]
+var handler: EventHandlerRef?
+var spec = EventTypeSpec(eventClass: OSType(kEventClassKeyboard), eventKind: UInt32(kEventHotKeyPressed))
+InstallEventHandler(GetApplicationEventTarget(), { _, event, _ in
+    var hotKey = EventHotKeyID()
+    GetEventParameter(event, EventParamName(kEventParamDirectObject), EventParamType(typeEventHotKeyID), nil, MemoryLayout<EventHotKeyID>.size, nil, &hotKey)
+    select(hotKeys[hotKey.id]!, hotKey.id == 1 ? "F18" : "F19")
+    return noErr
+}, 1, &spec, nil, &handler)
+for (id, code) in [(UInt32(1), kVK_F18), (UInt32(2), kVK_F19)] {
+    var ref: EventHotKeyRef?
+    let status = RegisterEventHotKey(UInt32(code), 0, EventHotKeyID(signature: OSType(0x6C6B6262), id: id), GetApplicationEventTarget(), 0, &ref)
+    precondition(status == noErr, "RegisterEventHotKey \(code): \(status)")
+}
+
+// Подключение клавиатуры. USB и Bluetooth подключаются почти одновременно — достаточно выбрать английский.
+let matching = IOServiceMatching("IOHIDDevice") as NSMutableDictionary
+matching["VendorID"] = 0x1D50
+matching["ProductID"] = 0x615E
 let port = IONotificationPortCreate(kIOMainPortDefault)
 CFRunLoopAddSource(CFRunLoopGetMain(), IONotificationPortGetRunLoopSource(port).takeUnretainedValue(), .defaultMode)
-
 var iterator: io_iterator_t = 0
 // Первый проход по уже подключённым устройствам пропускаем: язык меняется только при новом подключении.
 var initial = true
@@ -76,11 +56,14 @@ let callback: IOServiceMatchingCallback = { _, iterator in
         found = true
         IOObjectRelease(service)
     }
-    if found && !initial { selectEnglish() }
+    if found && !initial { select(englishID, "likeeb подключена") }
 }
 let kr = IOServiceAddMatchingNotification(port, kIOFirstMatchNotification, matching, callback, nil, &iterator)
 precondition(kr == KERN_SUCCESS, "IOServiceAddMatchingNotification: \(kr)")
 callback(nil, iterator)
 initial = false
-print("\(Date()) жду подключения likeeb")
-CFRunLoopRun()
+
+print("\(Date()) жду F18, F19 и подключения likeeb")
+let app = NSApplication.shared
+app.setActivationPolicy(.prohibited)
+app.run()

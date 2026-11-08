@@ -49,21 +49,18 @@
     };
 
     macros {
-        // Одно нажатие: язык macOS и слой прошивки.
-        // Space держится 150 мс: короткий тап macOS пропускает, если переключатель языков давно не запускался.
-        lang_tog: lang_tog {
+        // Одно нажатие: язык macOS и слой прошивки. F19 — русский, F18 — английский:
+        // служба likeeb-english на Маке включает по ним нужный источник ввода (macos/).
+        lang_ru: lang_ru {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings
-                = <&macro_wait_time 30>
-                , <&macro_press &kp LCTRL>
-                , <&macro_wait_time 150>
-                , <&macro_press &kp SPACE>
-                , <&macro_wait_time 30>
-                , <&macro_release &kp SPACE>
-                , <&macro_release &kp LCTRL>
-                , <&macro_tap &tog RU>
-                ;
+            bindings = <&macro_tap &kp F19 &tog RU>;
+        };
+
+        lang_en: lang_en {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp F18 &tog RU>;
         };
 
         m_arrow: m_arrow {
@@ -88,11 +85,19 @@
 
     behaviors {
         // Средняя клавиша правого большого пальца: тап — язык, удержание — диктовка Aqua Voice (Shift+Alt+D).
-        // Вызов: &dict_lang LS(LA(D)) 0.
-        dict_lang: dictation_or_language {
+        // На Base тап включает русский, на RU — английский. Вызов: &dict_ru LS(LA(D)) 0.
+        dict_ru: dictation_or_russian {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            bindings = <&kp>, <&lang_tog>;
+            bindings = <&kp>, <&lang_ru>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+        };
+
+        dict_en: dictation_or_english {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            bindings = <&kp>, <&lang_en>;
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
         };
@@ -325,7 +330,7 @@
 &kp Q         &kp W        &kp F        &kp P               &kp B        &kp J         &kp L               &kp U            &kp Y        &kp SEMI
 &lht LCTRL A  &lht LALT R  &lht LGUI S  &lht_shift LSHFT T  &kp G        &kp M         &rht_shift RSHFT N  &rht RGUI E      &rht RALT I  &rht RCTRL O
 &kp Z         &kp X        &kp C        &kp D               &kp V        &kp K         &kp H               &kp COMMA        &kp DOT      &kp FSLH
-                           &lt NAV SPACE  &lt FUN TAB      &lt MEDIA ESC    &lt SYM RETURN  &dict_lang LS(LA(D)) 0  &lt NUM BACKSPACE
+                           &lt NAV SPACE  &lt FUN TAB      &lt MEDIA ESC    &lt SYM RETURN  &dict_ru LS(LA(D)) 0  &lt NUM BACKSPACE
             >;
         };
 
@@ -335,7 +340,7 @@
 &kp Q         &kp W          &mm_e          &mm_r           &mm_t        &mm_y         &mm_u           &mm_i          &mm_o          &mm_p
 &lht LCTRL A  &lht_s LALT 0  &lht_d LGUI 0  &lht_f LSHFT 0  &kp G        &mm_h         &rht_j RSHFT 0  &rht_k RGUI 0  &rht_l RALT 0  &rht_semi RCTRL 0
 &kp Z         &kp X          &kp C          &mm_v           &mm_b        &mm_n         &mm_m           &mm_comma      &mm_dot        &mm_slash
-                             &trans         &trans          &trans       &trans        &trans          &trans
+                             &trans         &trans          &trans       &trans        &dict_en LS(LA(D)) 0  &trans
             >;
         };
 
