@@ -1,6 +1,9 @@
 // Включает английский источник ввода macOS, когда likeeb подключается к Маку.
 // Клавиатура подключается после сна или перезагрузки и всегда начинает со слоя Base (английский).
+// Язык переключается нажатием Ctrl+Space, а не TISSelectInputSource: после программного выбора
+// переключатель macOS пропускает следующее Ctrl+Space. Нужно разрешение «Универсальный доступ».
 import Carbon
+import CoreGraphics
 import Foundation
 import IOKit
 
@@ -11,12 +14,44 @@ let matching = IOServiceMatching("IOHIDDevice") as NSMutableDictionary
 matching["VendorID"] = 0x1D50
 matching["ProductID"] = 0x615E
 
+func currentID() -> String {
+    let source = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
+    return Unmanaged<CFString>.fromOpaque(TISGetInputSourceProperty(source, kTISPropertyInputSourceID)).takeUnretainedValue() as String
+}
+
+func key(_ code: CGKeyCode, down: Bool) {
+    let event = CGEvent(keyboardEventSource: nil, virtualKey: code, keyDown: down)!
+    event.flags = .maskControl
+    event.post(tap: .cghidEventTap)
+}
+
+// Space держится 150 мс, как в прошивке.
+func pressControlSpace() {
+    key(CGKeyCode(kVK_Control), down: true)
+    usleep(30_000)
+    key(CGKeyCode(kVK_Space), down: true)
+    usleep(150_000)
+    key(CGKeyCode(kVK_Space), down: false)
+    usleep(30_000)
+    let up = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(kVK_Control), keyDown: false)!
+    up.post(tap: .cghidEventTap)
+}
+
 func selectEnglish() {
-    let filter = [kTISPropertyInputSourceID as String: englishID] as CFDictionary
-    let list = TISCreateInputSourceList(filter, false).takeRetainedValue() as! [TISInputSource]
-    precondition(!list.isEmpty, "нет источника ввода \(englishID)")
-    let status = TISSelectInputSource(list[0])
-    print("\(Date()) likeeb подключена, \(englishID): \(status == noErr ? "включён" : "ошибка \(status)")")
+    let before = currentID()
+    if before == englishID {
+        print("\(Date()) likeeb подключена, уже \(englishID)")
+        return
+    }
+    pressControlSpace()
+    // Ждём смены языка, чтобы повторное подключение (USB и Bluetooth) не нажало Ctrl+Space второй раз.
+    for _ in 0..<20 where currentID() == before { usleep(50_000) }
+    print("\(Date()) likeeb подключена, Ctrl+Space: \(before) → \(currentID())")
+}
+
+if !CGPreflightPostEventAccess() {
+    print("\(Date()) нет разрешения «Универсальный доступ», запрашиваю")
+    CGRequestPostEventAccess()
 }
 
 if CommandLine.arguments.contains("--select-now") {
